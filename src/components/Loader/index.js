@@ -5,8 +5,8 @@ class Spinner extends Component {
   state = {};
   render() {
     return (
-      <div class="lds-css ng-scope">
-        <div class="lds-flickr">
+      <div className="lds-css ng-scope ">
+        <div className="lds-flickr">
           <div />
           <div />
           <div />

@@ -1,30 +1,80 @@
 import React, { Component } from "react";
+import SwapiService from "./../../services/swapi";
+import Spinner from "./../Loader";
+import ErrorIndicator from "./../ErrorIndicator";
 import "./styles.sass";
 class RandomPlanet extends Component {
-  state = {};
+  swapiService = new SwapiService();
+  state = {
+    planet: {},
+    loading: true,
+    error: false
+  };
+  componentDidMount() {
+    this.updatePlanet();
+    this.interval = setInterval(this.updatePlanet, 10000);
+  }
+  onPlanetLoaded = planet => {
+    this.setState({ planet, loading: false });
+  };
+  onError = err => {
+    this.setState({
+      error: true,
+      loading: false
+    });
+  };
+  updatePlanet = () => {
+    const id = Math.floor(Math.random() * 30 + 1);
+    this.swapiService
+      .getPlanet(id)
+      .then(this.onPlanetLoaded)
+      .catch(this.onError);
+  };
+
   render() {
+    const { planet, loading, error } = this.state;
     return (
-      <div class="jumbotron jumbotron-fluid mt-4 p-0">
-        <div class="random-planet">
-          <div className="planet-image embed-responsive-item">
-            <img
-              src="https://starwars.ru/media/cache/ce/1b/ce1bd0373e9ef1b3368773b1b6cb153c.png"
-              alt="Death Star"
-              width="100%"
-            />
-          </div>
-          <div className="planet-info">
-            <h3>Star of the Death</h3>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">Cras justo odio</li>
-              <li class="list-group-item">Dapibus ac facilisis in</li>
-              <li class="list-group-item">Morbi leo risus</li>
-            </ul>
-          </div>
-        </div>
+      <div className="jumbotron rounded d-flex justify-center mt-4 p-0">
+        {loading ? (
+          <Spinner />
+        ) : error ? (
+          <ErrorIndicator />
+        ) : (
+          <PlanetView planet={planet} />
+        )}
       </div>
     );
   }
 }
 
+const PlanetView = ({ planet }) => {
+  const { id, name, population, rotationPeriod, diameter } = planet;
+  return (
+    <div className="random-planet row">
+      <div className="planet-image col-xs-12 col-md-6">
+        <img
+          alt="Нет картинки для этой планеты"
+          src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}
+          width="100%"
+        />
+      </div>
+      <div className="planet-info col-md-5">
+        <h3>{name}</h3>
+        <ul className="list-group list-group-flush">
+          <li className="list-group-item">
+            <span>Population:</span> <span> {population}</span>
+          </li>
+          <li className="list-group-item">
+            <span>Rotation Period: </span>
+            <span children={rotationPeriod} />
+          </li>
+          <li className="list-group-item">
+            <span children="Diameter: " />
+            <span children={diameter} />
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+};
 export default RandomPlanet;

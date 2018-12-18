@@ -1,36 +1,36 @@
 import React, { Component } from "react";
-import SwapiService from "./../../services/swapi";
 import Spinner from "./../Loader";
 class ItemList extends Component {
-  swapiService = new SwapiService();
   state = {
-    peopleList: null
+    itemList: null
   };
   componentDidMount() {
-    this.swapiService.getAllPeople().then(peopleList =>
+    const { getData } = this.props;
+    getData().then(itemList =>
       this.setState({
-        peopleList
+        itemList
       })
     );
   }
   renderItems = arr => {
-    return arr.map(el => {
+    return arr.map(item => {
+      const label = this.props.renderItem(item);
       return (
         <li
-          onClick={() => this.props.onItemSelected(el.id)}
-          key={el.id}
+          onClick={() => this.props.onItemSelected(item.id)}
+          key={item.id}
           className="list-group-item list-group-item-action "
-          children={el.name}
+          children={label}
         />
       );
     });
   };
   render() {
-    const { peopleList } = this.state;
-    if (!peopleList) return <Spinner />;
+    const { itemList } = this.state;
+    if (!itemList) return <Spinner />;
 
     return (
-      <div className="list-group fluid ">{this.renderItems(peopleList)}</div>
+      <div className="list-group fluid ">{this.renderItems(itemList)}</div>
     );
   }
 }

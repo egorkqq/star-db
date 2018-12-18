@@ -14,13 +14,13 @@ class Header extends Component {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item active">
-              <a className="nav-link">People</a>
+              <p className="nav-link">People</p>
             </li>
             <li className="nav-item">
-              <a className="nav-link">Planets</a>
+              <p className="nav-link">Planets</p>
             </li>
             <li className="nav-item">
-              <a className="nav-link">Starships</a>
+              <p className="nav-link">Starships</p>
             </li>
           </ul>
         </div>

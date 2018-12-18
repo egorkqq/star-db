@@ -1,16 +1,22 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import Header from "./../Header";
 import RandomPlanet from "./../RandomPlanet";
 import PeoplePage from "./../PeoplePage";
 import "./styles.sass";
-import ErrorIndicator from "../ErrorIndicator";
+
+import SwapiService from "../../services/swapi";
+
 class App extends Component {
+  swapiService = new SwapiService();
+
   render() {
     return (
       <div className="container">
         <Header />
         <RandomPlanet />
-        <PeoplePage />
+        <PeoplePage getDataType={this.swapiService.getAllPeople} />
+        <PeoplePage getDataType={this.swapiService.getAllPlanets} />
+        <PeoplePage getDataType={this.swapiService.getAllStarships} />
       </div>
     );
   }

@@ -3,7 +3,7 @@ import PersonDetails from "./../PersonDetails";
 import ItemList from "./../ItemList";
 import ErrorIndicator from "../ErrorIndicator";
 class PeoplePage extends Component {
-  state = { selectedPerson: 3 };
+  state = { selectedPerson: null };
   onPersonSelected = id => {
     this.setState({
       selectedPerson: id,

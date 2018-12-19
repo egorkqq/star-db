@@ -1,26 +1,41 @@
 import React, { Component } from "react";
-
+import { Link } from "react-router-dom";
 class Header extends Component {
-  state = {};
+  state = { menuOpened: false };
+
+  openMenu = e => {
+    this.setState({
+      menuOpened: !this.state.menuOpened
+    });
+  };
   render() {
+    const style = this.state.menuOpened
+      ? " navbar-collapse"
+      : "collapse navbar-collapse";
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="/">
+        <Link className="navbar-brand" to="/">
           StarDB
-        </a>
-        <button className="navbar-toggler">
+        </Link>
+        <button onClick={this.openMenu} className="navbar-toggler">
           <span className="navbar-toggler-icon" />
         </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div className={style} id="navbarNav">
           <ul className="navbar-nav">
-            <li className="nav-item active">
-              <p className="nav-link">People</p>
+            <li className="nav-item">
+              <Link to="/people" className="nav-link">
+                People
+              </Link>
             </li>
             <li className="nav-item">
-              <p className="nav-link">Planets</p>
+              <Link to="/planets" className="nav-link">
+                Planets
+              </Link>
             </li>
             <li className="nav-item">
-              <p className="nav-link">Starships</p>
+              <Link to="/starships" className="nav-link">
+                Starships
+              </Link>
             </li>
           </ul>
         </div>

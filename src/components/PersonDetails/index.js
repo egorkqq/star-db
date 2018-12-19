@@ -2,15 +2,14 @@ import React, { Component } from "react";
 import "./styles.sass";
 import SwapiService from "./../../services/swapi";
 import Spinner from "../Loader";
-import ErrorButton from "../ErrorButton";
+import PersonDetailsView from "./PersonDetailsView";
 class PersonDetails extends Component {
   swapiService = new SwapiService();
   state = {
-    person: null,
+    item: null,
     loading: true
   };
   componentDidMount() {
-    console.log("cdm");
     this.updatePerson();
   }
   componentDidUpdate(prevProps) {
@@ -22,60 +21,33 @@ class PersonDetails extends Component {
     if (!personId) {
       return;
     }
-    this.swapiService.getPerson(personId).then(person => {
+    this.props.getData(personId).then(item => {
       this.setState({
-        person,
+        item,
         loading: false
       });
     });
   }
   render() {
-    const { person, loading } = this.state;
+    const { item, loading } = this.state;
+    const { people, planets, starships } = this.props;
     return (
       <div className="jumbotron p-1 mt-4 mt-md-0 mt-xl-0">
-        {!this.state.person ? (
+        {!this.state.item ? (
           <span>Select a person from a list</span>
         ) : loading ? (
           <Spinner />
         ) : (
-          <PersonDetailsView person={person} />
+          <PersonDetailsView
+            people={people}
+            planets={planets}
+            starships={starships}
+            item={item}
+          />
         )}
       </div>
     );
   }
 }
-
-const PersonDetailsView = ({ person }) => {
-  const { id, name, gender, birthYear, eyeColor } = person;
-  return (
-    <div className="details">
-      <div className="subject-picture">
-        <img
-          src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
-          alt={name}
-          width="100%"
-        />
-      </div>
-      <div>
-        <h4>{name}</h4>
-        <ul className="person-data list-group list-group-flush">
-          <li className="list-group-item">
-            <span>Gender: </span>
-            <span children={gender} />
-          </li>
-          <li className="list-group-item">
-            <span>Birth Year: </span>
-            <span children={birthYear} />
-          </li>
-          <li className="list-group-item">
-            <span>Eye Color: </span>
-            <span children={eyeColor} />
-          </li>
-        </ul>
-        <ErrorButton />
-      </div>
-    </div>
-  );
-};
 
 export default PersonDetails;

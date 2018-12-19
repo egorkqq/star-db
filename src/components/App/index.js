@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Header from "./../Header";
 import RandomPlanet from "./../RandomPlanet";
 import PeoplePage from "./../PeoplePage";
@@ -20,6 +20,33 @@ class App extends Component {
       isLoggedIn: true
     });
   };
+  renderPeople = () => {
+    return (
+      <PeoplePage
+        people
+        getListType={this.swapiService.getAllPeople}
+        getDetailsType={this.swapiService.getPerson}
+      />
+    );
+  };
+  renderStarships = () => {
+    return (
+      <PeoplePage
+        starships
+        getListType={this.swapiService.getAllStarships}
+        getDetailsType={this.swapiService.getStarship}
+      />
+    );
+  };
+  renderPlanets = () => {
+    return (
+      <PeoplePage
+        planets
+        getListType={this.swapiService.getAllPlanets}
+        getDetailsType={this.swapiService.getPlanet}
+      />
+    );
+  };
   render() {
     return (
       <BrowserRouter>
@@ -33,42 +60,9 @@ class App extends Component {
               render={() => <h2 className="text-center">Welcome to StarDB</h2>}
             />
 
-            <Route
-              path="/planets"
-              render={() => {
-                return (
-                  <PeoplePage
-                    planets
-                    getListType={this.swapiService.getAllPlanets}
-                    getDetailsType={this.swapiService.getPlanet}
-                  />
-                );
-              }}
-            />
-            <Route
-              path="/people"
-              render={() => {
-                return (
-                  <PeoplePage
-                    people
-                    getListType={this.swapiService.getAllPeople}
-                    getDetailsType={this.swapiService.getPerson}
-                  />
-                );
-              }}
-            />
-            <Route
-              path="/starships"
-              render={() => {
-                return (
-                  <PeoplePage
-                    starships
-                    getListType={this.swapiService.getAllStarships}
-                    getDetailsType={this.swapiService.getStarship}
-                  />
-                );
-              }}
-            />
+            <Route path="/planets" component={this.renderPlanets} />
+            <Route path="/people" component={this.renderPeople} />
+            <Route path="/starships" component={this.renderStarships} />
             <Route
               path="/login"
               render={() => {

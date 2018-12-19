@@ -3,9 +3,8 @@ import ItemDetails from "./../ItemDetails";
 import ItemList from "./../ItemList";
 import ErrorIndicator from "../ErrorIndicator";
 import SwapiService from "../../services/swapi";
-import { withRouter } from "react-router-dom";
 
-class PeoplePage extends Component {
+class ItemPage extends Component {
   swapiService = new SwapiService();
   state = { selectedItem: null, hasError: false };
   onPersonSelected = id => {
@@ -20,15 +19,16 @@ class PeoplePage extends Component {
   }
   render() {
     const { people, planets, starships } = this.props;
-    const itemList = withRouter(props => {
-      return (
-        <ItemList
-          onItemSelected={this.onPersonSelected}
-          getData={this.props.getListType}
-          renderItem={item => item.name}
-        />
-      );
-    });
+    const itemList = (
+      <ItemList
+        people={people}
+        planets={planets}
+        starships={starships}
+        onItemSelected={this.onPersonSelected}
+        getData={this.props.getListType}
+        renderItem={item => item.name}
+      />
+    );
     const itemDetails = (
       <ItemDetails
         people={people}
@@ -54,4 +54,4 @@ const Row = ({ left, right }) => {
     </div>
   );
 };
-export default PeoplePage;
+export default ItemPage;

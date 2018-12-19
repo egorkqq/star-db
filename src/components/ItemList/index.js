@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Spinner from "./../Loader";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 class ItemList extends Component {
   state = {
     itemList: null
@@ -17,14 +17,13 @@ class ItemList extends Component {
     return arr.map(item => {
       const label = this.props.renderItem(item);
       return (
-        <Link to={item.id}>
-          <li
-            onClick={() => this.props.onItemSelected(item.id)}
-            key={item.id}
-            className="list-group-item list-group-item-action "
-            children={label}
-          />
-        </Link>
+        <Link
+          to={`${this.props.match.path}/${item.id}`}
+          onClick={() => this.props.onItemSelected(item.id)}
+          key={item.id}
+          className="list-group-item list-group-item-action "
+          children={label}
+        />
       );
     });
   };
@@ -38,4 +37,4 @@ class ItemList extends Component {
   }
 }
 
-export default ItemList;
+export default withRouter(ItemList);

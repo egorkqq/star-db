@@ -67,7 +67,6 @@ class ItemDetailsView extends Component {
     );
   }
   renderStarship(item) {
-    console.log(item);
     const { id, name, manufacturer, passengers, cargoCapacity } = item;
     return (
       <div className="details">

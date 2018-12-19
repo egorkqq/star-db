@@ -5,6 +5,7 @@ import ItemPage from "./../ItemPage";
 import "./styles.sass";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import SwapiService from "../../services/swapi";
+import ItemDetails from "../ItemDetails";
 
 class App extends Component {
   swapiService = new SwapiService();
@@ -42,9 +43,45 @@ class App extends Component {
           <Header />
           <RandomPlanet />
           <Route path="/" exact render={() => <h3>Welcome to StarDB</h3>} />
-          <Route path="/people" component={this.peoplePage} />
-          <Route path="/planets" component={this.planetPage} />
+          <Route path="/people" exact component={this.peoplePage} />
+          <Route path="/planets" exact component={this.planetPage} />
           <Route path="/starships" exact component={this.starshipPage} />
+          <Route
+            path="/starships/:id"
+            render={({ match }) => {
+              return (
+                <ItemDetails
+                  starships
+                  getData={this.swapiService.getStarship}
+                  personId={match.params.id}
+                />
+              );
+            }}
+          />
+          <Route
+            path="/people/:id"
+            render={({ match }) => {
+              return (
+                <ItemDetails
+                  people
+                  getData={this.swapiService.getPerson}
+                  personId={match.params.id}
+                />
+              );
+            }}
+          />
+          <Route
+            path="/planets/:id"
+            render={({ match }) => {
+              return (
+                <ItemDetails
+                  planets
+                  getData={this.swapiService.getPlanet}
+                  personId={match.params.id}
+                />
+              );
+            }}
+          />
         </div>
       </Router>
     );

@@ -8,19 +8,19 @@ self.__precacheManifest = [
     "url": "/star-db/static/js/runtime~main.efac5df8.js"
   },
   {
-    "revision": "674bfc7818942e2be71d",
-    "url": "/star-db/static/js/main.674bfc78.chunk.js"
+    "revision": "bdaea1cd306e61c239e7",
+    "url": "/star-db/static/js/main.bdaea1cd.chunk.js"
   },
   {
     "revision": "4bd3e9520aad91322b4b",
     "url": "/star-db/static/js/1.4bd3e952.chunk.js"
   },
   {
-    "revision": "674bfc7818942e2be71d",
+    "revision": "bdaea1cd306e61c239e7",
     "url": "/star-db/static/css/main.9a2a4276.chunk.css"
   },
   {
-    "revision": "9f393414cc984a18042ce79cd4732987",
+    "revision": "396b451fcad8f994ba2627276c9cbdc3",
     "url": "/star-db/index.html"
   }
 ];
